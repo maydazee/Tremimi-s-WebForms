@@ -1,0 +1,200 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head runat="server">
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%: Page.Title %> - Tremimi's Software</title>
+
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+
+    <link href="<%= ResolveUrl("~/Content/Site.css") %>" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <link rel="icon" type="image/x-icon" href="Images/logo.ico" />
+
+</head>
+
+
+<body>
+
+<form runat="server">
+
+
+    <asp:ScriptManager runat="server">
+
+        <Scripts>
+
+            <asp:ScriptReference Name="MsAjaxBundle" />
+            <asp:ScriptReference Name="jquery" />
+            <asp:ScriptReference Name="bootstrap" />
+
+            <asp:ScriptReference 
+                Name="WebForms.js" 
+                Assembly="System.Web" 
+                Path="~/Scripts/WebForms/WebForms.js" />
+
+        </Scripts>
+
+    </asp:ScriptManager>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+
+        <div class="container">
+
+
+            <div class="navbar-header">
+
+                <button type="button" 
+                        class="navbar-toggle" 
+                        data-toggle="collapse" 
+                        data-target=".navbar-collapse">
+
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+
+                </button>
+
+
+                <a class="navbar-brand" runat="server" href="~/">
+
+                    <img src="Images/logo.png" class="logo-menu" />
+
+                </a>
+
+
+            </div>
+
+
+
+            <div class="navbar-collapse collapse">
+
+
+                <ul class="nav navbar-nav">
+
+
+                    <li>
+                        <a runat="server" href="~/">
+                            Inicio
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a runat="server" href="~/Nosotros">
+                            Nosotros
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a runat="server" href="~/Servicios">
+                            Servicios
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a runat="server" href="~/Proyectos">
+                            Proyectos
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a runat="server" href="~/Contacto">
+                            Contacto
+                        </a>
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+
+
+        </div>
+
+
+    </nav>
+
+    <div class="container body-content">
+
+
+        <asp:ContentPlaceHolder 
+            ID="MainContent" 
+            runat="server">
+
+        </asp:ContentPlaceHolder>
+
+
+
+        <footer class="footer-tremimi">
+
+    <div class="footer-contenido">
+
+        <div class="footer-columna">
+            <h3>Tremimi's Software</h3>
+            <p>
+                Soluciones digitales innovadoras para transformar
+                ideas en tecnología funcional.
+            </p>
+        </div>
+
+
+        <div class="footer-columna">
+            <h4>NAVEGACIÓN</h4>
+
+            <a href="~/">Inicio</a>
+            <a href="~/Nosotros">Nosotros</a>
+            <a href="~/Servicios">Servicios</a>
+            <a href="~/Contacto">Contacto</a>
+
+        </div>
+
+
+        <div class="footer-columna">
+            <h4>CONTACTO</h4>
+
+            <p>📍 San Salvador, El Salvador</p>
+            <p>✉ contacto@tremimis.com</p>
+            <p>☎ +503 0000-0000</p>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-final">
+
+        © <%: DateTime.Now.Year %> Tremimi's Software. 
+        Todos los derechos reservados.
+
+    </div>
+
+</footer>
+
+
+    </div>
+
+
+</form>
+
+
+</body>
+
+
+</html>
