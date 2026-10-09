@@ -1,0 +1,671 @@
+﻿@{
+    ViewData["Title"] = "Hoteles";
+}
+
+<link rel="stylesheet" href="~/css/styleHoteles.css" asp-append-version="true" />
+
+
+<body>
+   <div class="hoteles-inicio">
+
+    
+        <div class="hoteles-presentacion">
+
+            <p class="hoteles-ruta">
+                Inicio &gt; Hoteles
+            </p>
+
+            <h1>Hoteles</h1>
+
+            <p class="hoteles-descripcion">
+                Encuentra el alojamiento perfecto para tu viaje.<br />
+                Comodidad, ubicación y los mejores precios
+            </p>
+
+        </div>
+
+
+        
+        <div class="hoteles-buscador">
+
+            <form class="buscador-viaje">
+
+
+               
+                <label class="buscador-cuadro">
+
+                    <div class="buscador-icono">
+                        <i class="bi bi-geo-alt"></i>
+                    </div>
+
+                    <div class="buscador-contenido">
+
+                        <span>Destino</span>
+
+                        <input type="text"
+                               name="destino"
+                               placeholder="¿A dónde quieres ir?" />
+
+                    </div>
+
+                </label>
+
+
+              
+                <label class="buscador-cuadro">
+
+                    <div class="buscador-icono">
+                        <i class="bi bi-calendar3"></i>
+                    </div>
+
+                    <div class="buscador-contenido">
+
+                        <span>Fecha de entrada</span>
+
+                        <input type="date"
+                               name="fechaEntrada" />
+
+                    </div>
+
+                </label>
+
+
+                
+                <label class="buscador-cuadro">
+
+                    <div class="buscador-icono">
+                        <i class="bi bi-calendar3"></i>
+                    </div>
+
+                    <div class="buscador-contenido">
+
+                        <span>Fecha de salida</span>
+
+                        <input type="date"
+                               name="fechaSalida" />
+
+                    </div>
+
+                </label>
+
+
+             
+                <div class="buscador-cuadro">
+
+                    <div class="buscador-icono">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+
+                    <div class="buscador-contenido">
+
+                        <span>Huéspedes</span>
+
+                        <select name="huespedes">
+
+                            <option value="1">
+                                1 adulto, 0 niños
+                            </option>
+
+                            <option value="2" selected>
+                                2 adultos, 0 niños
+                            </option>
+
+                            <option value="3">
+                                2 adultos, 1 niño
+                            </option>
+
+                            <option value="4">
+                                2 adultos, 2 niños
+                            </option>
+
+                            <option value="5">
+                                3 adultos, 0 niños
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+              
+                <button class="btn btn-info btn-buscar"
+                        type="submit">
+                    Buscar
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <div class="hoteles-disponibles">
+
+        
+        <div class="hoteles-disponibles-header">
+
+            <div>
+                <h2>Hoteles disponibles</h2>
+                <p>Mostrando 120 hoteles</p>
+            </div>
+
+            <div class="hoteles-ordenar">
+
+                <span>Ordenar por:</span>
+
+                <button type="button"
+                        class="btn btn-outline-secondary">
+                    Más populares
+                </button>
+
+            </div>
+
+        </div>
+
+
+      
+        <div class="hotel-card">
+
+            
+            <div class="hotel-imagen">
+
+                <img src="~/Recursos/img/Paraiso.png"
+                     alt="Hotel Paraíso Resort & Spa" />
+
+            </div>
+
+
+            
+            <div class="hotel-informacion">
+
+                <h3>Hotel Paraíso Resort & Spa</h3>
+
+                <div class="hotel-estrellas">
+                    ★★★★★
+                </div>
+
+                <div class="hotel-ubicacion">
+
+                    <img src="~/Recursos/icohoteles/ubi.png"
+                         alt="Ubicación" />
+
+                    <span>Bali, Indonesia</span>
+
+                </div>
+
+                <p class="hotel-descripcion">
+                    Resort de lujo con spa, piscina infinita y acceso
+                    directo a la playa. Desayuno incluido.
+                </p>
+
+
+               
+                <div class="hotel-servicios">
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/wifi.png" alt="Wifi" />
+                        Wi-Fi gratis
+                    </span>
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/Desayuno.png" alt="Desayuno" />
+                        Desayuno
+                    </span>
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/picina.png" alt="Piscina" />
+                        Piscina
+                    </span>
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/spa.png" alt="Spa" />
+                        Spa
+                    </span>
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/gym.png" alt="Gimnasio" />
+                        Ejercicio
+                    </span>
+
+                </div>
+
+            </div>
+
+
+           
+            <div class="hotel-resumen">
+
+                <div class="hotel-calificacion">
+
+                    <strong>9.3</strong>
+
+                    <div>
+                        <b>Excelente</b>
+                        <small>1250 opiniones</small>
+                    </div>
+
+                </div>
+
+                <div class="hotel-precio">
+
+                    <span>Desde</span>
+                    <h3>$104</h3>
+                    <small>Por noche</small>
+
+                </div>
+
+                <button type="button"
+                        class="btn btn-info text-white">
+                    Ver detalle
+                </button>
+
+            </div>
+
+        </div>
+
+
+        
+        <div class="hotel-card">
+
+            <div class="hotel-imagen">
+
+                <img src="~/Recursos/img/dubai.png"
+                     alt="Dubai Marina Hotel" />
+
+            </div>
+
+
+            <div class="hotel-informacion">
+
+                <h3>Dubai Marina Hotel</h3>
+
+                <div class="hotel-estrellas">
+                    ★★★★
+                </div>
+
+                <div class="hotel-ubicacion">
+
+                    <img src="~/Recursos/icohoteles/ubi.png"
+                         alt="Ubicación" />
+
+                    <span>Dubai, Emiratos Árabes</span>
+
+                </div>
+
+                <p class="hotel-descripcion">
+                    Hotel moderno con vista a la marina, cerca del centro
+                    comercial y atracciones principales.
+                </p>
+
+
+                <div class="hotel-servicios">
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/wifi.png" alt="Wifi" />
+                        Wi-Fi gratis
+                    </span>
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/Desayuno.png" alt="Desayuno" />
+                        Desayuno
+                    </span>
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/picina.png" alt="Piscina" />
+                        Piscina
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="hotel-resumen">
+
+                <div class="hotel-calificacion">
+
+                    <strong>8.8</strong>
+
+                    <div>
+                        <b>Muy bueno</b>
+                        <small>954 opiniones</small>
+                    </div>
+
+                </div>
+
+                <div class="hotel-precio">
+
+                    <span>Desde</span>
+                    <h3>$104</h3>
+                    <small>Por noche</small>
+
+                </div>
+
+                <button type="button"
+                        class="btn btn-info text-white">
+                    Ver detalle
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="hotel-card">
+
+            <div class="hotel-imagen">
+
+                <img src="~/Recursos/img/lumine.png"
+                     alt="Hotel Lumiere Paris" />
+
+            </div>
+
+
+            <div class="hotel-informacion">
+
+                <h3>Hotel Lumiere Paris</h3>
+
+                <div class="hotel-estrellas">
+                    ★★★★★
+                </div>
+
+                <div class="hotel-ubicacion">
+
+                    <img src="~/Recursos/icohoteles/ubi.png"
+                         alt="Ubicación" />
+
+                    <span>París, Francia</span>
+
+                </div>
+
+                <p class="hotel-descripcion">
+                    Elegante hotel boutique en el corazón de París,
+                    ideal para una experiencia romántica.
+                </p>
+
+
+                <div class="hotel-servicios">
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/wifi.png" alt="Wifi" />
+                        Wi-Fi gratis
+                    </span>
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/Desayuno.png" alt="Desayuno" />
+                        Desayuno
+                    </span>
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/spa.png" alt="Spa" />
+                        Spa
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="hotel-resumen">
+
+                <div class="hotel-calificacion">
+
+                    <strong>9.1</strong>
+
+                    <div>
+                        <b>Excelente</b>
+                        <small>1100 opiniones</small>
+                    </div>
+
+                </div>
+
+                <div class="hotel-precio">
+
+                    <span>Desde</span>
+                    <h3>$189</h3>
+                    <small>Por noche</small>
+
+                </div>
+
+                <button type="button"
+                        class="btn btn-info text-white">
+                    Ver detalle
+                </button>
+
+            </div>
+
+        </div>
+
+
+        
+        <div class="hotel-card">
+
+            <div class="hotel-imagen">
+
+                <img src="~/Recursos/img/ocean.png"
+                     alt="Ocean Breeze Maldives" />
+
+            </div>
+
+
+            <div class="hotel-informacion">
+
+                <h3>Ocean Breeze Maldives</h3>
+
+                <div class="hotel-estrellas">
+                    ★★★★★
+                </div>
+
+                <div class="hotel-ubicacion">
+
+                    <img src="~/Recursos/icohoteles/ubi.png"
+                         alt="Ubicación" />
+
+                    <span>Maldivas</span>
+
+                </div>
+
+                <p class="hotel-descripcion">
+                    Bungalows sobre el agua con todo incluido.
+                    Disfruta del paraíso en todo momento.
+                </p>
+
+
+                <div class="hotel-servicios">
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/wifi.png" alt="Wifi" />
+                        Wi-Fi gratis
+                    </span>
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/Desayuno.png" alt="Desayuno" />
+                        Desayuno
+                    </span>
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/picina.png" alt="Piscina" />
+                        Piscina
+                    </span>
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/spa.png" alt="Spa" />
+                        Spa
+                    </span>
+
+                    <span>
+                        <img src="~/Recursos/icohoteles/gym.png" alt="Gimnasio" />
+                        Ejercicio
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="hotel-resumen">
+
+                <div class="hotel-calificacion">
+
+                    <strong>9.8</strong>
+
+                    <div>
+                        <b>Excelente</b>
+                        <small>2300 opiniones</small>
+                    </div>
+
+                </div>
+
+                <div class="hotel-precio">
+
+                    <span>Desde</span>
+                    <h3>$299</h3>
+                    <small>Por noche</small>
+
+                </div>
+
+                <button type="button"
+                        class="btn btn-info text-white">
+                    Ver detalle
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="filtros-hoteles">
+
+            <h3>Filtrar hoteles</h3>
+
+
+          
+            <div class="filtro-seccion">
+
+                <h4>Rango de precios <span>(por noche)</span></h4>
+
+                <input type="range"
+                       name="precio"
+                       min="50"
+                       max="500"
+                       value="300" />
+
+                <p>$50 - $500+</p>
+
+            </div>
+
+
+          
+            <div class="filtro-seccion">
+
+                <h4>Tipo de alojamiento</h4>
+
+                <label>
+                    <input type="checkbox" name="tipo" value="hoteles" checked />
+                    Hoteles
+                </label>
+
+                <label>
+                    <input type="checkbox" name="tipo" value="resort" checked />
+                    Resort
+                </label>
+
+                <label>
+                    <input type="checkbox" name="tipo" value="apartamentos" checked />
+                    Apartamentos
+                </label>
+
+                <label>
+                    <input type="checkbox" name="tipo" value="hostales" checked />
+                    Hostales
+                </label>
+
+                <label>
+                    <input type="checkbox" name="tipo" value="villas" checked />
+                    Villas
+                </label>
+
+            </div>
+
+
+           
+            <div class="filtro-seccion">
+
+                <h4>Servicios destacados</h4>
+
+                <label>
+                    <input type="checkbox" name="servicio" value="desayuno" checked />
+                    Desayuno incluido
+                </label>
+
+                <label>
+                    <input type="checkbox" name="servicio" value="piscina" checked />
+                    Piscina
+                </label>
+
+                <label>
+                    <input type="checkbox" name="servicio" value="wifi" checked />
+                    Wi-Fi gratis
+                </label>
+
+                <label>
+                    <input type="checkbox" name="servicio" value="spa" checked />
+                    Spa
+                </label>
+
+                <label>
+                    <input type="checkbox" name="servicio" value="gimnasio" checked />
+                    Gimnasio
+                </label>
+
+                <label>
+                    <input type="checkbox" name="servicio" value="estacionamiento" checked />
+                    Estacionamiento gratis
+                </label>
+
+            </div>
+
+
+            
+            <div class="filtro-seccion">
+
+                <h4>Puntuación del hotel</h4>
+
+                <label>
+                    <input type="checkbox" name="puntuacion" value="9" />
+                    ★★★★★
+                    <span>9 o más</span>
+                </label>
+
+                <label>
+                    <input type="checkbox" name="puntuacion" value="8" />
+                    ★★★★★
+                    <span>8 o más</span>
+                </label>
+
+                <label>
+                    <input type="checkbox" name="puntuacion" value="7" />
+                    ★★★★
+                    <span>7 o más</span>
+                </label>
+
+                <label>
+                    <input type="checkbox" name="puntuacion" value="6" />
+                    ★★★
+                    <span>6 o más</span>
+                </label>
+
+            </div>
+
+
+          
+            <button type="button"
+                    class="btn btn-outline-info btn-limpiar-filtros">
+                Limpiar filtros
+            </button>
+
+        </div>
+
+
+</body>

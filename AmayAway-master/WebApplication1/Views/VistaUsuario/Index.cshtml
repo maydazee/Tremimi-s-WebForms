@@ -1,0 +1,271 @@
+﻿@{
+   ViewData["Title"] = "Inicio";
+}
+
+<link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
+
+<body>
+    <div class="body-content">
+
+        <div class="body-viajes">
+
+            <h2>
+                Viaja, descubre,<br />
+                vive experiencias<br />
+                <span class="texto-destacado">inolvidables</span>
+            </h2>
+
+            <p>
+                Encuentra los mejores destinos,<br />
+                paquetes y promociones para tu<br />
+                próximo viaje
+            </p>
+
+        </div>
+
+
+        <div class="body-reserva">
+
+            <div class="reservas-iconos">
+
+                <div class="reserva-opcion">
+                    <img src="~/Recursos/iconos/avion.png" alt="Vuelo" />
+                    <span>Vuelos</span>
+                </div>
+
+                <div class="reserva-opcion">
+                    <img src="~/Recursos/iconos/hotel.png" alt="Hotel" />
+                    <span>Hoteles</span>
+                </div>
+
+                <div class="reserva-opcion">
+                    <img src="~/Recursos/iconos/paquetes.png" alt="Paquete" />
+                    <span>Paquetes</span>
+                </div>
+
+                <div class="reserva-opcion">
+                    <img src="~/Recursos/iconos/reservas.png" alt="Actividad" />
+                    <span>Actividades</span>
+                </div>
+
+            </div>
+
+
+            <form class="buscador-viaje">
+
+                <label class="buscador-cuadro">
+
+                    <div class="buscador-icono">
+                        <i class="bi bi-geo-alt"></i>
+                    </div>
+
+                    <div class="buscador-contenido">
+
+                        <span>Destino</span>
+
+                        <input type="text"
+                               name="destino"
+                               placeholder="¿A dónde quieres ir?" />
+
+                    </div>
+
+                </label>
+
+
+                <label class="buscador-cuadro">
+
+                    <div class="buscador-icono">
+                        <i class="bi bi-calendar3"></i>
+                    </div>
+
+                    <div class="buscador-contenido">
+
+                        <span>Fecha</span>
+
+                        <input type="date"
+                               name="fecha" />
+
+                    </div>
+
+                </label>
+
+
+                <div class="buscador-cuadro">
+
+                    <div class="buscador-icono">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+
+                    <div class="buscador-contenido">
+
+                        <span>Viajeros</span>
+
+                        <select name="viajeros">
+
+                            <option value="1">
+                                1 adulto
+                            </option>
+
+                            <option value="2" selected>
+                                2 adultos, 0 niños
+                            </option>
+
+                            <option value="3">
+                                3 adultos
+                            </option>
+
+                            <option value="4">
+                                4 adultos
+                            </option>
+
+                            <option value="5">
+                                5 adultos
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <button class="btn btn-info btn-buscar" type="submit">
+                    Buscar
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="beneficios">
+
+        <img src="~/Recursos/iconos/red.png" alt="Destinos increíbles" />
+        <h4>Destinos increíbles</h4>
+        <p>
+            Explora los mejores lugares<br />
+            alrededor del mundo
+        </p>
+
+
+        <img src="~/Recursos/iconos/precio.png" alt="Mejores precios" />
+        <h4>Mejores precios</h4>
+        <p>
+            Ofertas exclusivas y promociones<br />
+            para ti
+        </p>
+
+
+        <img src="~/Recursos/iconos/seguro.png" alt="Reserva segura" />
+        <h4>Reserva segura</h4>
+        <p>
+            Tu información y pagos<br />
+            protegidos
+        </p>
+
+
+        <img src="~/Recursos/iconos/soporte.png" alt="Soporte 24/7" />
+        <h4>Soporte 24/7</h4>
+        <p>
+            Estamos contigo en cada paso<br />
+            de tu viaje
+        </p>
+
+    </div>
+
+    <div class="destinos-populares">
+
+        <div class="destinos-titulo">
+
+            <h2>Destinos populares</h2>
+
+            <a href="#">
+                Ver todos
+                <i class="bi bi-chevron-right"></i>
+            </a>
+
+        </div>
+
+
+        <div class="destinos-lista">
+
+            <!-- PARÍS -->
+            <div class="destino-card">
+
+                <img src="~/Recursos/img/pairs.png"
+                     alt="París" />
+
+                <h3>París</h3>
+
+                <p>Francia</p>
+
+                <span>Desde</span>
+
+                <h4>$899</h4>
+
+                <small>USD</small>
+
+            </div>
+
+
+            <!-- BALI -->
+            <div class="destino-card">
+
+                <img src="~/Recursos/img/bali.png"
+                     alt="Bali" />
+
+                <h3>Bali</h3>
+
+                <p>Indonesia</p>
+
+                <span>Desde</span>
+
+                <h4>$1044</h4>
+
+                <small>USD</small>
+
+            </div>
+
+
+            <!-- NUEVA YORK -->
+            <div class="destino-card">
+
+                <img src="~/Recursos/img/nuevayork.png"
+                     alt="Nueva York" />
+
+                <h3>Nueva York</h3>
+
+                <p>Estados Unidos</p>
+
+                <span>Desde</span>
+
+                <h4>$799</h4>
+
+                <small>USD</small>
+
+            </div>
+
+
+            <!-- DUBÁI -->
+            <div class="destino-card">
+
+                <img src="~/Recursos/img/dubai.png"
+                     alt="Dubái" />
+
+                <h3>Dubái</h3>
+
+                <p>Emiratos Árabes</p>
+
+                <span>Desde</span>
+
+                <h4>$900</h4>
+
+                <small>USD</small>
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
