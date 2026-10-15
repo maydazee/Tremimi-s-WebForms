@@ -1,0 +1,61 @@
+/* Estilos base para la vista de Clientes */
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #f3f4f6;
+    margin: 0;
+    padding: 0;
+    color: #1f2937;
+}
+
+/* Modales e Interacciones */
+.hidden {
+    display: none !important;
+}
+
+/* Tablas */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 0.75rem;
+}
+
+tr:hover {
+    background-color: #f9fafb;
+}
+
+/* Badges de Estado */
+.badge-activo {
+    background-color: #d1fae5;
+    color: #047857;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 0.625rem;
+}
+
+.badge-inactivo {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 0.625rem;
+}
+
+/* Botones y Contenedores */
+.btn-primary {
+    background-color: #2563eb;
+    color: #ffffff;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+    .btn-primary:hover {
+        background-color: #1d4ed8;
+    }
