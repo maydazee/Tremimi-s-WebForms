@@ -1,0 +1,245 @@
+﻿@model IEnumerable<Destino1.Models.Servicio>
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Destinos - Amayaway";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/png" href="~/imagines/AmayaAway logo.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen m-0 p-0 w-full overflow-x-hidden">
+
+  
+    <header class="bg-white shadow-sm py-4 px-6 md:px-12 flex justify-between items-center w-full">
+        <div class="flex items-center space-x-2">
+            <img src="~/imagines/AmayaAway logo.png" alt="Amayaway Logo" class="h-12 md:h-14 object-contain" />
+        </div>
+        <nav class="hidden md:flex space-x-8 text-sm font-medium text-gray-600">
+            <a href="#" class="hover:text-sky-500 transition">Inicio</a>
+            <a href="#" class="text-sky-500 font-bold border-b-2 border-sky-500 pb-1">Destinos</a>
+            <a href="#" class="hover:text-sky-500 transition">Paquetes</a>
+            <a href="#" class="hover:text-sky-500 transition">Hoteles</a>
+            <a href="#" class="hover:text-sky-500 transition">Actividades</a>
+            <a href="#" class="hover:text-sky-500 transition">Promociones</a>
+            <a href="#" class="hover:text-sky-500 transition">Contacto</a>
+        </nav>
+        <div class="flex space-x-3">
+            <button class="px-4 py-2 text-xs text-gray-700 hover:text-sky-500 font-medium">Inicio sesión</button>
+            <button class="px-4 py-2 text-xs bg-sky-500 text-white rounded-lg hover:bg-sky-600 font-medium transition shadow-sm">Registrar</button>
+        </div>
+    </header>
+
+   
+    <section class="relative bg-cover bg-center h-auto min-h-[22rem] md:min-h-[24rem] py-8 flex flex-col justify-center items-center text-white text-center px-4 w-full"
+             style="background-image: url('@Url.Content("~/imagines/mar.png")');">
+        <div class="absolute inset-0 bg-blue-900 bg-opacity-30"></div>
+        <div class="relative z-10 max-w-5xl w-full px-4">
+            <h1 class="text-3xl md:text-4xl font-bold mb-2 drop-shadow-md text-left">Destinos</h1>
+            <p class="text-xs md:text-sm mb-6 text-gray-100 font-light text-left">Explora los mejores destinos alrededor del mundo y planifica tu próximo viaje</p>
+
+            <form method="get" asp-action="Index" class="bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-xl text-gray-800 flex flex-col gap-3">
+
+                <div class="flex flex-wrap gap-3 items-center justify-between">
+                    <div class="flex-1 min-w-[140px]">
+                        <label class="block text-xs text-left font-semibold text-gray-500 mb-1">Región</label>
+                        <select name="region" class="w-full border border-gray-200 bg-gray-50 rounded-lg p-2 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500">
+                            <option value="">Todas las regiones</option>
+                            <option value="Asia" selected="@(ViewBag.Region == "Asia")">Asia</option>
+                            <option value="Europa" selected="@(ViewBag.Region == "Europa")">Europa</option>
+                            <option value="América" selected="@(ViewBag.Region == "América")">América</option>
+                        </select>
+                    </div>
+
+                    <div class="flex-1 min-w-[140px]">
+                        <label class="block text-xs text-left font-semibold text-gray-500 mb-1">País</label>
+                        <select name="pais" class="w-full border border-gray-200 bg-gray-50 rounded-lg p-2 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500">
+                            <option value="">Todos los países</option>
+                            <option value="Indonesia" selected="@(ViewBag.Pais == "Indonesia")">Indonesia</option>
+                            <option value="Francia" selected="@(ViewBag.Pais == "Francia")">Francia</option>
+                            <option value="EE.UU" selected="@(ViewBag.Pais == "EE.UU")">EE.UU</option>
+                            <option value="EAU" selected="@(ViewBag.Pais == "EAU")">EAU</option>
+                        </select>
+                    </div>
+
+                    <div class="flex-1 min-w-[140px]">
+                        <label class="block text-xs text-left font-semibold text-gray-500 mb-1">Tipo de destino</label>
+                        <select name="tipo" class="w-full border border-gray-200 bg-gray-50 rounded-lg p-2 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500">
+                            <option value="">Todos los tipos</option>
+                            <option value="Playas" selected="@(ViewBag.Tipo == "Playas")">Playas</option>
+                            <option value="Ciudad" selected="@(ViewBag.Tipo == "Ciudad")">Ciudad</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-end gap-2">
+                        <button type="button" onclick="toggleMasFiltros()" class="px-3 py-2 border border-gray-300 rounded-lg text-xs text-gray-600 bg-white hover:bg-gray-50 font-medium flex items-center gap-1.5 transition">
+                            <i class="fas fa-sliders-h text-[10px]"></i> Más Filtros
+                        </button>
+                        <button type="submit" class="px-5 py-2 bg-sky-500 text-white rounded-lg text-xs flex items-center gap-1.5 font-medium hover:bg-sky-600 transition shadow-md">
+                            <i class="fas fa-search"></i> Buscar destinos
+                        </button>
+                    </div>
+                </div>
+
+                
+                <div id="panelMasFiltros" class="@(ViewBag.PrecioMax != null || ViewBag.PuntuacionMin != null ? "" : "hidden") border-t border-gray-200 pt-3 mt-1 grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 mb-1">Precio máximo ($ USD)</label>
+                        <input type="number" name="precioMax" value="@ViewBag.PrecioMax" placeholder="Ej. 900" class="w-full border border-gray-200 bg-gray-50 rounded-lg p-2 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 mb-1">Calificación de Estrellas</label>
+                        <select name="puntuacionMin" class="w-full border border-gray-200 bg-gray-50 rounded-lg p-2 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500">
+                            <option value="">Todas las estrellas</option>
+                            <option value="4.5" selected="@(ViewBag.PuntuacionMin == 4.5)">4.5 estrellas o más </option>
+                            <option value="4.8" selected="@(ViewBag.PuntuacionMin == 4.8)">4.8 estrellas o más </option>
+                            <option value="5.0" selected="@(ViewBag.PuntuacionMin == 5.0)">5.0 estrellas </option>
+                        </select>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </section>
+
+    <main class="max-w-7xl mx-auto py-10 px-6 flex-grow w-full">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold text-gray-800">Destinos populares</h2>
+            <form method="get" asp-action="Index" id="formOrden" class="flex items-center gap-2 text-xs text-gray-500">
+                <input type="hidden" name="region" value="@ViewBag.Region" />
+                <input type="hidden" name="pais" value="@ViewBag.Pais" />
+                <input type="hidden" name="tipo" value="@ViewBag.Tipo" />
+                <input type="hidden" name="precioMax" value="@ViewBag.PrecioMax" />
+                <input type="hidden" name="puntuacionMin" value="@ViewBag.PuntuacionMin" />
+                <span>Ordenar por:</span>
+                <select name="orden" onchange="document.getElementById('formOrden').submit()" class="border border-gray-300 rounded-lg px-3 py-1.5 bg-white text-xs focus:outline-none">
+                    <option value="Populares" selected="@(ViewBag.Orden == "Populares")">Más populares</option>
+                    <option value="PrecioMasBajo" selected="@(ViewBag.Orden == "PrecioMasBajo")">Precio más bajo</option>
+                </select>
+            </form>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var destino in Model)
+                {
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden flex flex-col justify-between">
+                        <div>
+                            <img src="@Url.Content(destino.ImagenUrl)" alt="@destino.Nombre" class="w-full h-44 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-base text-gray-800">@destino.Nombre, @destino.Pais</h3>
+                                <p class="text-[11px] text-gray-500 my-1.5 leading-relaxed line-clamp-2">@destino.Descripcion</p>
+                                <p class="text-[11px] text-gray-400 mb-2">Mejor época: <span class="font-medium text-gray-600">@destino.MejorEpoca</span></p>
+
+                                <div class="flex items-center text-yellow-400 text-xs mb-1">
+                                    <i class="fas fa-star mr-1"></i>
+                                    <span class="font-bold text-gray-800">@destino.Puntuacion</span>
+                                    <span class="text-gray-400 ml-1">(@destino.Resenas)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 border-t border-gray-100 flex justify-between items-center bg-gray-50/50">
+                            <div>
+                                <span class="text-[10px] text-gray-400 block">Desde</span>
+                                <span class="text-lg font-extrabold text-gray-900">$@destino.Precio.ToString("0")</span>
+                            </div>
+                            <a href="#" class="px-3 py-1.5 bg-sky-500 text-white text-xs font-semibold rounded-lg hover:bg-sky-600 transition shadow-sm">Ver detalle</a>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-span-4 text-center py-12 text-gray-500 bg-white rounded-2xl border border-gray-200 text-sm">
+                    No se encontraron destinos con los criterios seleccionados.
+                </div>
+            }
+        </div>
+    </main>
+
+    <footer class="bg-[#0a2558] text-white pt-10 pb-6 px-6 md:px-12 mt-auto w-full">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-xs">
+            <div>
+                <img src="~/imagines/AmayaAway logo.png" alt="Amayaway Logo" class="h-16 object-contain mb-3 brightness-200" />
+                <p class="text-gray-300">Hacemos de tus viajes</p>
+                <p class="text-gray-200 font-semibold">Experiencias inolvidables</p>
+                <p class="text-gray-300 mb-4">Descubre tu mundo</p>
+                <div class="flex space-x-2 text-sm">
+                    <a href="#" class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center hover:bg-sky-500 transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center hover:bg-sky-500 transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center hover:bg-sky-500 transition"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center hover:bg-sky-500 transition"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-sm mb-3">Explora</h4>
+                <ul class="space-y-1.5 text-gray-300">
+                    <li>› Inicio</li>
+                    <li>› Destinos</li>
+                    <li>› Paquetes turísticos</li>
+                    <li>› Hoteles</li>
+                    <li>› Actividades</li>
+                    <li>› Promociones</li>
+                    <li>› Mis reservas</li>
+                    <li>› Contacto</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-sm mb-3">Información</h4>
+                <ul class="space-y-1.5 text-gray-300">
+                    <li>› Sobre nosotros</li>
+                    <li>› Preguntas frecuentes</li>
+                    <li>› Términos y condiciones</li>
+                    <li>› Política de privacidad</li>
+                    <li>› Aviso legal</li>
+                    <li>› Blog</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-sm mb-3">Contacto</h4>
+                <p class="mb-1"><i class="fas fa-phone-alt mr-1 text-sky-400"></i> +503 1234 5678</p>
+                <p class="mb-1"><i class="fas fa-envelope mr-1 text-sky-400"></i> info@amayaway.com</p>
+                <p class="mb-3"><i class="fas fa-map-marker-alt mr-1 text-sky-400"></i> Soyapango, El Salvador</p>
+
+                <p class="font-bold mb-1">Suscríbete a nuestro boletín</p>
+                <p class="text-gray-300 text-[10px] mb-2">Recibe ofertas exclusivas y noticias de viajes.</p>
+                <div class="flex">
+                    <input type="email" placeholder="Tu correo electrónico" class="p-1.5 text-gray-800 text-xs rounded-l w-full focus:outline-none" />
+                    <button class="bg-sky-400 hover:bg-sky-500 px-3 py-1.5 rounded-r font-bold text-xs">Suscribirme</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto border-t border-white/10 pt-4 flex justify-between items-center text-[11px] text-gray-400">
+            <p>© 2026 <span class="text-sky-400 font-semibold">Amayaway</span> Air & Travel. Todos los derechos reservados.</p>
+            <div class="space-x-2 font-bold italic">
+                <span class="bg-white text-blue-900 px-1.5 py-0.5 rounded">VISA</span>
+                <span class="bg-white text-red-600 px-1.5 py-0.5 rounded">MasterCard</span>
+                <span class="bg-sky-600 text-white px-1.5 py-0.5 rounded">AMEX</span>
+                <span class="bg-white text-blue-800 px-1.5 py-0.5 rounded">PayPal</span>
+            </div>
+        </div>
+    </footer>
+
+   
+    <script>
+            function toggleMasFiltros() {
+                const panel = document.getElementById('panelMasFiltros');
+                panel.classList.toggle('hidden');
+            }
+    </script>
+
+</body>
+</html>

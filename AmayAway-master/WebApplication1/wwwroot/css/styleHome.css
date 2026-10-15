@@ -1,0 +1,548 @@
+﻿/* =========================================================
+   CONFIGURACIÓN GENERAL
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #111111;
+}
+
+main {
+    width: 100%;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header-principal {
+    width: 100%;
+    height: 75px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 0 18px;
+    background-color: #ffffff;
+    border-top: 3px solid #f1f1f1;
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+    /* =========================================================
+   LOGO DEL HEADER
+========================================================= */
+
+    .header-principal .logo {
+        justify-self: start;
+        display: flex;
+        align-items: center;
+    }
+
+        .header-principal .logo a {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-principal .logo img {
+            width: 75px;
+            height: auto;
+            display: block;
+        }
+
+
+/* =========================================================
+   MENÚ PRINCIPAL
+========================================================= */
+
+.menu-principal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    justify-self: center;
+}
+
+    .menu-principal a {
+        color: #111111;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+        .menu-principal a:hover {
+            color: #159fd3;
+        }
+
+
+/* =========================================================
+   BOTONES DEL HEADER
+========================================================= */
+
+.acciones-header {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-iniciar,
+.btn-registrar {
+    padding: 9px 18px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+
+/* INICIAR SESIÓN */
+
+.btn-iniciar {
+    color: #111111;
+    background-color: #ffffff;
+    border: 1px solid #159fd3;
+}
+
+    .btn-iniciar:hover {
+        color: #159fd3;
+        background-color: #f3fbff;
+    }
+
+
+/* REGISTRAR */
+
+.btn-registrar {
+    color: #ffffff;
+    background-color: #159fd3;
+    border: 1px solid #159fd3;
+}
+
+    .btn-registrar:hover {
+        color: #ffffff;
+        background-color: #1189b8;
+        border-color: #1189b8;
+    }
+
+
+/* =========================================================
+   FOOTER PRINCIPAL
+========================================================= */
+
+.footer-principal {
+    width: 100%;
+    background-color: #173d78;
+    color: #ffffff;
+    padding: 45px 40px 25px 40px;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 1fr 1.35fr;
+    column-gap: 50px;
+    row-gap: 20px;
+    align-items: start;
+}
+
+
+/* =========================================================
+   PRIMERA COLUMNA
+   LOGO + TEXTOS + REDES
+========================================================= */
+
+.footer-inicio {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+    /* QUITA LOS BR QUE TENGAS EN ESA PARTE */
+
+    .footer-inicio > br {
+        display: none;
+    }
+
+
+    /* LOGO DEL FOOTER */
+
+    .footer-inicio .logo {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 22px;
+    }
+
+        .footer-inicio .logo img {
+            width: 145px;
+            height: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+
+    /* TEXTOS */
+
+    .footer-inicio h4 {
+        margin: 0 0 10px 0;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.4;
+    }
+
+
+/* =========================================================
+   REDES SOCIALES
+========================================================= */
+
+.footer-Redes {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 15px;
+}
+
+
+    /* SI TODAVÍA TIENES BR ENTRE LOS ICONOS */
+
+    .footer-Redes br {
+        display: none;
+    }
+
+
+    .footer-Redes a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+
+    .footer-Redes img {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+        transition: transform 0.2s ease;
+    }
+
+
+        .footer-Redes img:hover {
+            transform: scale(1.08);
+        }
+
+
+/* =========================================================
+   EXPLORA E INFORMACIÓN
+========================================================= */
+
+.footer-seccion {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+
+    /* TÍTULO */
+
+    .footer-seccion h3 {
+        margin: 0 0 5px 0;
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+
+    /* ENLACES */
+
+    .footer-seccion a {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 400;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: color 0.2s ease;
+    }
+
+
+        /* FLECHAS */
+
+        .footer-seccion a i {
+            color: #00aeef;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+
+        .footer-seccion a:hover {
+            color: #00aeef;
+        }
+
+
+/* =========================================================
+   CONTACTO
+========================================================= */
+
+.footer-contacto {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+    /* TÍTULO CONTACTO */
+
+    .footer-contacto h3 {
+        margin: 0 0 13px 0;
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+
+/* CADA DATO DE CONTACTO */
+
+.footer-contacto-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    color: #ffffff;
+    font-size: 13px;
+}
+
+
+    /* ICONO REDONDO */
+
+    .footer-contacto-item > i {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ffffff;
+        color: #00aeef;
+        border: 2px solid #00aeef;
+        border-radius: 50%;
+        font-size: 14px;
+    }
+
+
+/* =========================================================
+   BOLETÍN
+========================================================= */
+
+.footer-correo {
+    width: 100%;
+    margin-top: 20px;
+    color: #ffffff;
+}
+
+
+    /* TÍTULO */
+
+    .footer-correo h3 {
+        margin: 0 0 5px 0;
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+
+    /* TEXTO */
+
+    .footer-correo p {
+        margin: 0 0 12px 0;
+        color: #d8e2ef;
+        font-size: 11px;
+    }
+
+
+/* =========================================================
+   FORMULARIO DEL CORREO
+========================================================= */
+
+.form-correo {
+    width: 100%;
+    max-width: 310px;
+    height: 40px;
+    display: flex;
+    align-items: stretch;
+}
+
+
+    /* INPUT */
+
+    .form-correo input {
+        min-width: 0;
+        flex: 1;
+        border: none;
+        outline: none;
+        padding: 0 15px;
+        background-color: #ffffff;
+        color: #555555;
+        border-radius: 22px 0 0 22px;
+        font-size: 11px;
+    }
+
+
+        .form-correo input::placeholder {
+            color: #888888;
+        }
+
+
+    /* BOTÓN */
+
+    .form-correo button {
+        border: none;
+        outline: none;
+        padding: 0 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        background-color: #08afe1;
+        color: #ffffff;
+        border-radius: 0 22px 22px 0;
+        font-size: 11px;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+
+        .form-correo button i {
+            font-size: 14px;
+        }
+
+
+        .form-correo button:hover {
+            background-color: #078fbd;
+        }
+
+
+/* =========================================================
+   PARTE INFERIOR DEL FOOTER
+========================================================= */
+
+.footer-bottom {
+    /* OCUPA TODO EL ANCHO DEL GRID */
+
+    grid-column: 1 / -1;
+    width: 100%;
+    margin-top: 20px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+/* =========================================================
+   COPYRIGHT
+========================================================= */
+
+.footer-copyright {
+    display: flex;
+    align-items: center;
+}
+
+
+    .footer-copyright p {
+        margin: 0;
+        color: #d9e2ef;
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+
+    .footer-copyright span {
+        color: #00aeef;
+    }
+
+
+/* =========================================================
+   MÉTODOS DE PAGO
+========================================================= */
+
+.footer-pagos {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+
+    .footer-pagos img {
+        width: auto;
+        height: 27px;
+        max-width: 70px;
+        object-fit: contain;
+    }
+
+
+/* =========================================================
+   RESPONSIVE TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .footer-principal {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 45px;
+        row-gap: 40px;
+    }
+
+
+    .footer-bottom {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE CELULAR
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .footer-principal {
+        grid-template-columns: 1fr;
+        padding: 40px 25px;
+        row-gap: 35px;
+    }
+
+
+    .footer-bottom {
+        grid-column: 1;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 22px;
+    }
+
+
+    .footer-pagos {
+        flex-wrap: wrap;
+    }
+
+
+    .form-correo {
+        max-width: 100%;
+    }
+}

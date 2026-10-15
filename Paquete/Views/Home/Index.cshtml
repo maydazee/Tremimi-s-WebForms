@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Paquete.Models.Paquetes>
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Paquetes - Amayaway";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/png" href="~/imagines/AmayaAway logo.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen m-0 p-0 w-full overflow-x-hidden">
+
+    <!-- HEADER / NAVEGACIÓN -->
+    <header class="bg-white shadow-sm py-4 px-6 md:px-12 flex justify-between items-center w-full">
+        <div class="flex items-center space-x-2">
+            <img src="~/imagines/AmayaAway logo.png" alt="Amayaway Logo" class="h-10 md:h-12 object-contain" />
+        </div>
+        <nav class="hidden md:flex space-x-8 text-xs font-medium text-gray-600">
+            <a href="#" class="hover:text-sky-500 transition">Inicio</a>
+            <a href="#" class="hover:text-sky-500 transition">Destinos</a>
+            <a href="@Url.Action("Index", "Home")" class="text-sky-500 font-bold border-b-2 border-sky-500 pb-1">Paquetes</a>
+            <a href="#" class="hover:text-sky-500 transition">Hoteles</a>
+            <a href="#" class="hover:text-sky-500 transition">Actividades</a>
+            <a href="#" class="hover:text-sky-500 transition">Promociones</a>
+            <a href="#" class="hover:text-sky-500 transition">Contacto</a>
+        </nav>
+        <div class="flex space-x-3">
+            <button class="px-4 py-1.5 text-xs text-gray-700 hover:text-sky-500 font-medium">Inicio sesión</button>
+            <button class="px-4 py-1.5 text-xs bg-sky-500 text-white rounded-lg hover:bg-sky-600 font-medium transition shadow-sm">Registrar</button>
+        </div>
+    </header>
+
+    <!-- PAQUETES DESTACADOS -->
+    <main class="max-w-6xl mx-auto py-10 px-6 flex-grow w-full">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-xl md:text-2xl font-bold text-gray-800">Paquetes destacados</h1>
+            <a href="#" class="text-sky-500 text-xs font-medium hover:underline flex items-center gap-1">Ver todos <i class="fas fa-chevron-down text-[10px]"></i></a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition overflow-hidden flex flex-col justify-between p-3">
+                        <div>
+                            <img src="@Url.Content(item.ImagenUrl)" alt="@item.Nombre" class="w-full h-44 object-cover rounded-2xl mb-4" />
+                            <div class="px-2">
+                                <h3 class="font-bold text-sm text-gray-800 mb-2">@item.Nombre</h3>
+                                <p class="text-[11px] text-gray-400 leading-tight">@item.Vuelos</p>
+                                <p class="text-[11px] text-gray-400 leading-tight">@item.Hotel</p>
+                                <div class="flex justify-between items-center mt-2 mb-4">
+                                    <span class="text-[10px] text-gray-400">@item.Transportacion</span>
+
+                                    <!-- Botón Funcional Ver Detalle -->
+                                    <a href="@Url.Action("Detalle", "Home", new { id = item.Id })"
+                                       class="text-[10px] bg-sky-100 text-sky-600 px-2.5 py-1 rounded-full font-semibold hover:bg-sky-500 hover:text-white transition">
+                                        Ver detalle
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-2 pt-2 border-t border-gray-100 flex justify-between items-baseline">
+                            <span class="text-[11px] text-gray-400">Desde</span>
+                            <div class="text-right">
+                                <span class="text-lg font-extrabold text-gray-900">$@item.Precio.ToString("N0")</span>
+                                <span class="text-[10px] text-gray-400 ml-1">USD</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="relative rounded-3xl overflow-hidden bg-cover bg-center h-44 md:h-48 flex items-center px-8 shadow-md"
+             style="background-image: url('@Url.Content("~/imagines/mar.png")');">
+            <div class="absolute inset-0 bg-gradient-to-r from-sky-400/80 to-transparent"></div>
+            <div class="relative z-10 max-w-sm text-white">
+                <h2 class="text-xl font-bold mb-1 drop-shadow-sm">Promociones exclusivas</h2>
+                <p class="text-xs text-sky-50 font-light mb-4">Aprovecha nuestras ofertas por un tiempo limitado.</p>
+                <a href="#" class="px-4 py-2 bg-sky-500 text-white rounded-xl text-xs font-semibold hover:bg-sky-600 transition shadow">Ver Promociones</a>
+            </div>
+        </div>
+    </main>
+
+    
+    <footer class="bg-[#0a2558] text-white pt-8 pb-6 px-6 md:px-12 w-full mt-auto">
+        <div class="max-w-6xl mx-auto flex justify-between items-center text-[10px] text-gray-400">
+            <p>© 2026 <span class="text-sky-400 font-semibold">Amayaway</span> Air & Travel. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
