@@ -1,0 +1,151 @@
+/* ==========================================================================
+   AMAYAWAY - ESTILOS BASE Y PERSONALIZADOS
+   ========================================================================== */
+
+/* Importación de Tailwind CSS (Si usas compilación local con PostCSS / Tailwind CLI) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 1. REGLAS GENERALES Y FUENTES */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f0f4f8;
+    color: #1f2937;
+    min-height: 100vh;
+}
+
+/* Scrollbar personalizado suave */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+
+/* 2. COMPONENTES Y TARJETAS */
+.card-amayaway {
+    background-color: #ffffff;
+    border-radius: 1.5rem; /* 24px */
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease-in-out;
+}
+
+    .card-amayaway:hover {
+        box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
+    }
+
+/* 3. BOTONES PERSONALIZADOS */
+.btn-primary {
+    background-color: #2563eb;
+    color: #ffffff;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .btn-primary:hover {
+        background-color: #1d4ed8;
+    }
+
+    .btn-primary:active {
+        transform: scale(0.98);
+    }
+
+.btn-secondary {
+    border: 1px solid #bfdbfe;
+    color: #2563eb;
+    background-color: rgba(239, 246, 255, 0.6);
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+    .btn-secondary:hover {
+        background-color: #dbeafe;
+    }
+
+/* 4. MODALES Y EFECTOS BLUR */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+/* Animación de entrada para Modales */
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modal-content {
+    animation: modalIn 0.25s ease-out forwards;
+}
+
+/* 5. MENÚ DESPLEGABLE (DROPDOWN) GESTIONAR */
+.group:hover .group-hover\:block {
+    display: block !important;
+}
+
+/* 6. ESTADOS DE BADGES / ETIQUETAS */
+.badge-activo {
+    background-color: #dcfce7;
+    color: #15803d;
+    font-weight: 700;
+    font-size: 10px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+}
+
+.badge-viajando {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+    font-weight: 700;
+    font-size: 10px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+}
+
+.badge-inactivo {
+    background-color: #ffe4e6;
+    color: #be123c;
+    font-weight: 700;
+    font-size: 10px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+}

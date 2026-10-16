@@ -1,0 +1,455 @@
+﻿@using Clientes.Models
+@model IEnumerable<Clientes.Models.Vuelo>
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Vuelos - Amayaway";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/png" href="@Url.Content("~/imagine/AmayaAway logo.png")" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body class="bg-[#f0f4f8] text-gray-800 flex flex-col min-h-screen m-0 p-0 font-sans">
+
+    <!-- HEADER / NAV SUPERIOR UNIFICADO -->
+    <header class="bg-white border-b border-gray-200 px-8 py-3 flex justify-between items-center shadow-sm sticky top-0 z-30">
+        <div class="flex items-center space-x-10">
+            <!-- LOGOTIPO CON REDIRECCIÓN CORRECTA A INICIO -->
+            <a href="@Url.Action("Index", "Inicio")" class="flex items-center gap-2">
+                <img src="@Url.Content("~/imagine/AmayaAway logo.png")" alt="Amayaway Logo" class="h-10 object-contain" />
+            </a>
+            <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-600 items-center">
+                <!-- ENLACE INICIO CORREGIDO A INICIOCONTROLLER -->
+                <a href="@Url.Action("Index", "Inicio")" class="hover:text-blue-600 transition">Inicio</a>
+                
+                <!-- MENÚ DESPLEGABLE GESTIONAR (SIN PROMOCIONES) -->
+                <div class="relative group py-2">
+                    <button class="hover:text-blue-600 font-medium flex items-center gap-1 focus:outline-none">
+                        Gestionar <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="absolute left-0 mt-1 w-48 bg-white border border-gray-100 rounded-2xl shadow-xl py-2 hidden group-hover:block z-50">
+                        <a href="@Url.Action("Index", "Paquete")" class="block px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 hover:text-blue-600">Paquetes turísticos</a>
+                        <a href="@Url.Action("Index", "Home")" class="block px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 hover:text-blue-600">Clientes</a>
+                        <a href="@Url.Action("Index", "Reportes")" class="block px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 hover:text-blue-600 border-t border-gray-100 mt-1 pt-2">Reportes</a>
+                    </div>
+                </div>
+
+                <a href="@Url.Action("Index", "Reportes")" class="hover:text-blue-600 transition">Reportes</a>
+                <a href="@Url.Action("Index", "Home")" class="hover:text-blue-600 transition">Clientes</a>
+                <a href="@Url.Action("Index", "Vuelo")" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-1 flex items-center gap-1">Vuelos <i class="fas fa-chevron-down text-xs"></i></a>
+               <a href="@Url.Action("Index", "Empleado")" class="hover:text-blue-600 transition flex items-center gap-1">Empleados <i class="fas fa-chevron-down text-xs"></i></a>
+            </nav>
+        </div>
+        <div class="flex items-center space-x-5">
+            <button class="text-gray-500 hover:text-blue-600 relative"><i class="far fa-bell text-lg"></i></button>
+            <div class="flex items-center space-x-3 border-l pl-4 border-gray-200">
+                <div class="w-9 h-9 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm shadow">MG</div>
+                <div class="text-xs">
+                    <p class="font-bold text-gray-800">María Gómez</p>
+                    <p class="text-gray-400">Administrador</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ÁREA PRINCIPAL -->
+    <main class="flex-grow max-w-[1600px] w-full mx-auto px-6 py-6 space-y-6">
+
+        <!-- ENCABEZADO -->
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Vuelos</h1>
+                <p class="text-xs text-gray-500 mt-1">Consulta y gestiona la información de los vuelos disponibles. Puedes registrar, editar o desactivar vuelos.</p>
+            </div>
+            <button onclick="abrirModalCrear()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-xs font-semibold shadow-md transition flex items-center gap-2">
+                <i class="fas fa-plus"></i> Nuevo vuelo
+            </button>
+        </div>
+
+        <!-- TARJETAS DE MÉTRICAS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                <div class="p-3.5 bg-blue-500 text-white rounded-2xl text-xl shadow-md"><i class="fas fa-plane"></i></div>
+                <div>
+                    <p class="text-2xl font-extrabold text-gray-900">@ViewBag.TotalVuelos</p>
+                    <p class="text-xs text-gray-500 font-medium">Total de vuelos</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                <div class="p-3.5 bg-emerald-100 text-emerald-600 rounded-2xl text-xl"><i class="fas fa-plane-departure"></i></div>
+                <div>
+                    <p class="text-2xl font-extrabold text-gray-900">@ViewBag.VuelosActivos</p>
+                    <p class="text-xs text-gray-500 font-medium">Vuelos activos</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                <div class="p-3.5 bg-amber-100 text-amber-600 rounded-2xl text-xl"><i class="fas fa-percentage"></i></div>
+                <div>
+                    <p class="text-2xl font-extrabold text-gray-900">@ViewBag.EnPromocion</p>
+                    <p class="text-xs text-gray-500 font-medium">En promoción</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                <div class="p-3.5 bg-rose-100 text-rose-600 rounded-2xl text-xl"><i class="fas fa-plane-slash"></i></div>
+                <div>
+                    <p class="text-2xl font-extrabold text-gray-900">@ViewBag.VuelosInactivos</p>
+                    <p class="text-xs text-gray-500 font-medium">Vuelos inactivos</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILTROS DE BÚSQUEDA -->
+        <form method="get" asp-controller="Vuelo" asp-action="Index" class="bg-white p-4 rounded-3xl shadow-sm border border-gray-100 flex flex-wrap gap-4 items-center justify-between">
+            <div class="flex-1 min-w-[220px] relative">
+                <i class="fas fa-search absolute left-3.5 top-3.5 text-gray-400 text-xs"></i>
+                <input type="text" name="buscar" value="@ViewBag.BuscarActual" placeholder="Buscar vuelo, destino o aerolínea..." class="w-full pl-9 pr-4 py-2 border rounded-2xl text-xs bg-gray-50/50 focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-200" />
+            </div>
+
+            <div class="flex flex-wrap gap-3 text-xs items-end">
+                <div>
+                    <label class="block text-[10px] text-gray-400 font-semibold mb-1">Origen</label>
+                    <select name="origen" class="border rounded-xl p-2 bg-gray-50 text-xs min-w-[110px]">
+                        <option value="Todos" selected="@(ViewBag.OrigenActual == "Todos")">Todos</option>
+                        <option value="San Salvador (SAL)" selected="@(ViewBag.OrigenActual == "San Salvador (SAL)")">San Salvador (SAL)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] text-gray-400 font-semibold mb-1">Destino</label>
+                    <select name="destino" class="border rounded-xl p-2 bg-gray-50 text-xs min-w-[110px]">
+                        <option value="Todos" selected="@(ViewBag.DestinoActual == "Todos")">Todos</option>
+                        <option value="Bogotá (BOG)" selected="@(ViewBag.DestinoActual == "Bogotá (BOG)")">Bogotá (BOG)</option>
+                        <option value="Ciudad de Panamá (PTY)" selected="@(ViewBag.DestinoActual == "Ciudad de Panamá (PTY)")">Ciudad de Panamá (PTY)</option>
+                        <option value="Miami (MIA)" selected="@(ViewBag.DestinoActual == "Miami (MIA)")">Miami (MIA)</option>
+                        <option value="Madrid (MAD)" selected="@(ViewBag.DestinoActual == "Madrid (MAD)")">Madrid (MAD)</option>
+                        <option value="Nueva York (JFK)" selected="@(ViewBag.DestinoActual == "Nueva York (JFK)")">Nueva York (JFK)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] text-gray-400 font-semibold mb-1">Estado</label>
+                    <select name="estado" class="border rounded-xl p-2 bg-gray-50 text-xs min-w-[110px]">
+                        <option value="Todos" selected="@(ViewBag.EstadoActual == "Todos")">Todos</option>
+                        <option value="Activo" selected="@(ViewBag.EstadoActual == "Activo")">Activo</option>
+                        <option value="Promoción" selected="@(ViewBag.EstadoActual == "Promoción")">Promoción</option>
+                        <option value="Inactivo" selected="@(ViewBag.EstadoActual == "Inactivo")">Inactivo</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl font-semibold shadow transition">Filtrar</button>
+                <a href="@Url.Action("Index", "Vuelo")" class="border border-blue-200 text-blue-600 bg-blue-50/60 px-4 py-2 rounded-xl font-semibold hover:bg-blue-100 transition flex items-center gap-1.5">
+                    <i class="fas fa-undo text-[10px]"></i> Limpiar
+                </a>
+            </div>
+        </form>
+
+        <!-- TABLA DE VUELOS -->
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+            <table class="w-full text-left text-xs text-gray-600">
+                <thead class="bg-gray-50/80 border-b border-gray-100 font-bold text-gray-700 uppercase tracking-wider text-[11px]">
+                    <tr>
+                        <th class="p-4">Vuelo</th>
+                        <th class="p-4">Aerolínea</th>
+                        <th class="p-4">Origen</th>
+                        <th class="p-4">Destino</th>
+                        <th class="p-4">Fecha de salida</th>
+                        <th class="p-4">Hora de salida</th>
+                        <th class="p-4">Hora de llegada</th>
+                        <th class="p-4">Precio (USD)</th>
+                        <th class="p-4">Estado</th>
+                        <th class="p-4 text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr class="hover:bg-gray-50/60 transition">
+                                <td class="p-4 font-bold text-gray-500">
+                                    @item.CodigoVuelo
+                                </td>
+                                <td class="p-4 font-bold text-gray-900 flex items-center gap-3">
+                                    <div class="w-7 h-7 flex items-center justify-center flex-shrink-0 bg-gray-50 rounded-lg p-0.5 border border-gray-100">
+                                        <img src="@item.LogoUrl" alt="@item.Aerolinea" class="max-w-full max-h-full object-contain" />
+                                    </div>
+                                    <span>@item.Aerolinea</span>
+                                </td>
+                                <td class="p-4 font-medium text-gray-700">@item.Origen</td>
+                                <td class="p-4 font-medium text-gray-700">@item.Destino</td>
+                                <td class="p-4 text-gray-600">@item.FechaSalida</td>
+                                <td class="p-4 text-gray-600">@item.HoraSalida</td>
+                                <td class="p-4 text-gray-600">@item.HoraLlegada</td>
+                                <td class="p-4 font-extrabold text-gray-900">\$@item.Precio.ToString("N0")</td>
+                                <td class="p-4">
+                                    @if (item.Estado == "Activo")
+                                    {
+                                        <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-bold text-[10px] flex items-center gap-1 w-max">● Activo</span>
+                                    }
+                                    else if (item.Estado == "Promoción")
+                                    {
+                                        <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-700 font-bold text-[10px] flex items-center gap-1 w-max">● Promoción</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="px-3 py-1 rounded-full bg-rose-100 text-rose-700 font-bold text-[10px] flex items-center gap-1 w-max">● Inactivo</span>
+                                    }
+                                </td>
+                                <td class="p-4 text-center space-x-1">
+                                    <button onclick="editarVuelo(@item.Id, '@item.CodigoVuelo', '@item.Aerolinea', '@item.Origen', '@item.Destino', '@item.FechaSalida', '@item.HoraSalida', '@item.HoraLlegada', @item.Precio, '@item.Estado', '@item.LogoUrl')" class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg transition" title="Editar"><i class="fas fa-pen"></i></button>
+                                    <button onclick="confirmarEliminar(@item.Id, '@item.CodigoVuelo')" class="p-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-lg transition" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="10" class="p-8 text-center text-gray-400 font-medium">No se encontraron vuelos disponibles.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <!-- FOOTER AZUL COMPLETO INSTITUCIONAL -->
+    <footer class="bg-[#0a2558] text-white pt-10 pb-6 px-8 mt-auto">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-xs">
+            <div>
+                <img src="@Url.Content("~/imagine/AmayaAway logo.png")" alt="Amayaway Logo" class="h-12 object-contain mb-3 brightness-200" />
+                <p class="text-gray-300 leading-relaxed">Agencia de viajes especializada en experiencias inolvidables alrededor del mundo.</p>
+                <div class="flex space-x-3 mt-4 text-base text-gray-300">
+                    <i class="fab fa-facebook hover:text-white cursor-pointer"></i>
+                    <i class="fab fa-instagram hover:text-white cursor-pointer"></i>
+                    <i class="fab fa-x-twitter hover:text-white cursor-pointer"></i>
+                    <i class="fab fa-youtube hover:text-white cursor-pointer"></i>
+                    <i class="fab fa-tiktok hover:text-white cursor-pointer"></i>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold text-sm mb-3">Explora</h4>
+                <ul class="space-y-1.5 text-gray-300">
+                    <!-- ENLACE DE PIE DE PÁGINA CORREGIDO A INICIO -->
+                    <li><a href="@Url.Action("Index", "Inicio")" class="hover:underline">› Inicio</a></li>
+                    <li><a href="@Url.Action("Index", "Vuelo")" class="hover:underline">› Vuelos</a></li>
+                    <li><a href="@Url.Action("Index", "Paquete")" class="hover:underline">› Paquetes turísticos</a></li>
+                    <li><a href="@Url.Action("Index", "Home")" class="hover:underline">› Clientes</a></li>
+                    <li><a href="@Url.Action("Index", "Reportes")" class="hover:underline">› Reportes</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-sm mb-3">Información</h4>
+                <ul class="space-y-1.5 text-gray-300">
+                    <li>› Sobre nosotros</li>
+                    <li>› Términos y condiciones</li>
+                    <li>› Política de privacidad</li>
+                    <li>› Mapa del sitio</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-sm mb-3">Contacto</h4>
+                <p class="mb-1"><i class="fas fa-phone-alt mr-1"></i> +503 2214 5678</p>
+                <p class="mb-1"><i class="fas fa-envelope mr-1"></i> info@amayaway.com</p>
+                <p class="mb-3"><i class="fas fa-map-marker-alt mr-1"></i> San Salvador, El Salvador</p>
+                
+                <p class="font-semibold mb-1">Suscríbete a nuestro boletín</p>
+                <div class="flex">
+                    <input type="email" placeholder="Tu correo electrónico" class="px-3 py-1.5 rounded-l-lg text-gray-800 text-xs focus:outline-none w-full" />
+                    <button class="bg-sky-400 hover:bg-sky-500 text-white px-3 py-1.5 rounded-r-lg font-bold text-xs">Suscribirse</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto border-t border-white/10 pt-4 flex justify-between items-center text-[11px] text-gray-400">
+            <p>© 2026 <span class="text-sky-400 font-semibold">Amayaway</span>. Todos los derechos reservados.</p>
+            <div class="flex space-x-3 text-lg text-gray-300">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-amex"></i>
+                <i class="fab fa-cc-paypal"></i>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL CREAR -->
+    <div id="modalCrear" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl">
+            <h3 class="text-lg font-bold mb-4 text-gray-900">Registrar Nuevo Vuelo</h3>
+            <form asp-controller="Vuelo" asp-action="Crear" method="post" class="space-y-3 text-xs">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold mb-1">Código de Vuelo</label>
+                        <input type="text" name="CodigoVuelo" required placeholder="Ej: AV 101" class="w-full border rounded-xl p-2.5" />
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">Aerolínea</label>
+                        <input type="text" name="Aerolinea" required placeholder="Ej: Avianca" class="w-full border rounded-xl p-2.5" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold mb-1">Origen</label>
+                        <input type="text" name="Origen" required placeholder="Ej: San Salvador (SAL)" class="w-full border rounded-xl p-2.5" />
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">Destino</label>
+                        <input type="text" name="Destino" required placeholder="Ej: Bogotá (BOG)" class="w-full border rounded-xl p-2.5" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block font-semibold mb-1">Fecha Salida</label>
+                        <input type="text" name="FechaSalida" required placeholder="DD/MM/AAAA" class="w-full border rounded-xl p-2.5" />
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">Hora Salida</label>
+                        <input type="text" name="HoraSalida" required placeholder="08:15" class="w-full border rounded-xl p-2.5" />
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">Hora Llegada</label>
+                        <input type="text" name="HoraLlegada" required placeholder="11:30" class="w-full border rounded-xl p-2.5" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold mb-1">Precio (USD)</label>
+                        <input type="number" name="Precio" step="0.01" required class="w-full border rounded-xl p-2.5" />
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">Estado</label>
+                        <select name="Estado" class="w-full border rounded-xl p-2.5 bg-gray-50">
+                            <option value="Activo">Activo</option>
+                            <option value="Promoción">Promoción</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-semibold mb-1">Ruta Logo Aerolínea</label>
+                    <input type="text" name="LogoUrl" placeholder="/imagine/avianca.jpg" class="w-full border rounded-xl p-2.5" />
+                </div>
+                <div class="flex justify-end gap-2 mt-6 pt-3 border-t">
+                    <button type="button" onclick="cerrarModales()" class="px-4 py-2 border rounded-xl font-semibold">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700">Guardar Vuelo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL EDITAR -->
+    <div id="modalEditar" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl">
+            <h3 class="text-lg font-bold mb-4 text-gray-900">Editar Vuelo</h3>
+            <form asp-controller="Vuelo" asp-action="Editar" method="post" class="space-y-3 text-xs">
+                <input type="hidden" id="editId" name="Id" />
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold mb-1">Código de Vuelo</label>
+                        <input type="text" id="editCodigoVuelo" name="CodigoVuelo" required class="w-full border rounded-xl p-2.5" />
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">Aerolínea</label>
+                        <input type="text" id="editAerolinea" name="Aerolinea" required class="w-full border rounded-xl p-2.5" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold mb-1">Origen</label>
+                        <input type="text" id="editOrigen" name="Origen" required class="w-full border rounded-xl p-2.5" />
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">Destino</label>
+                        <input type="text" id="editDestino" name="Destino" required class="w-full border rounded-xl p-2.5" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block font-semibold mb-1">Fecha Salida</label>
+                        <input type="text" id="editFechaSalida" name="FechaSalida" required class="w-full border rounded-xl p-2.5" />
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">Hora Salida</label>
+                        <input type="text" id="editHoraSalida" name="HoraSalida" required class="w-full border rounded-xl p-2.5" />
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">Hora Llegada</label>
+                        <input type="text" id="editHoraLlegada" name="HoraLlegada" required class="w-full border rounded-xl p-2.5" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold mb-1">Precio (USD)</label>
+                        <input type="number" id="editPrecio" name="Precio" step="0.01" required class="w-full border rounded-xl p-2.5" />
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">Estado</label>
+                        <select id="editEstado" name="Estado" class="w-full border rounded-xl p-2.5 bg-gray-50">
+                            <option value="Activo">Activo</option>
+                            <option value="Promoción">Promoción</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-semibold mb-1">Ruta Logo Aerolínea</label>
+                    <input type="text" id="editLogoUrl" name="LogoUrl" class="w-full border rounded-xl p-2.5" />
+                </div>
+                <div class="flex justify-end gap-2 mt-6 pt-3 border-t">
+                    <button type="button" onclick="cerrarModales()" class="px-4 py-2 border rounded-xl font-semibold">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700">Actualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FORMULARIO ELIMINAR -->
+    <form id="formEliminar" asp-controller="Vuelo" asp-action="Eliminar" method="post" class="hidden">
+        <input type="hidden" id="deleteId" name="id" />
+    </form>
+
+    <script>
+        function abrirModalCrear() {
+            document.getElementById('modalCrear').classList.remove('hidden');
+        }
+
+        function editarVuelo(id, codigo, aerolinea, origen, destino, fecha, hSalida, hLlegada, precio, estado, logo) {
+            document.getElementById('editId').value = id;
+            document.getElementById('editCodigoVuelo').value = codigo;
+            document.getElementById('editAerolinea').value = aerolinea;
+            document.getElementById('editOrigen').value = origen;
+            document.getElementById('editDestino').value = destino;
+            document.getElementById('editFechaSalida').value = fecha;
+            document.getElementById('editHoraSalida').value = hSalida;
+            document.getElementById('editHoraLlegada').value = hLlegada;
+            document.getElementById('editPrecio').value = precio;
+            document.getElementById('editEstado').value = estado;
+            document.getElementById('editLogoUrl').value = logo;
+            document.getElementById('modalEditar').classList.remove('hidden');
+        }
+
+        function confirmarEliminar(id, codigo) {
+            if (confirm(`¿Estás seguro de que deseas eliminar el vuelo "${codigo}"?`)) {
+                document.getElementById('deleteId').value = id;
+                document.getElementById('formEliminar').submit();
+            }
+        }
+
+        function cerrarModales() {
+            document.getElementById('modalCrear').classList.add('hidden');
+            document.getElementById('modalEditar').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

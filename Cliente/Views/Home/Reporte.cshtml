@@ -1,0 +1,252 @@
+﻿@model Clientes.Models.ReporteViewModel
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Reportes - Amayaway";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/png" href="@Url.Content("~/imagine/AmayaAway logo.png")" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body class="bg-[#f0f4f8] text-gray-800 flex flex-col min-h-screen m-0 p-0 font-sans">
+
+    <!-- HEADER / NAV SUPERIOR UNIFICADO -->
+    <header class="bg-white border-b border-gray-200 px-8 py-3 flex justify-between items-center shadow-sm sticky top-0 z-30">
+        <div class="flex items-center space-x-10">
+            <!-- LOGO REDIRIGE A INICIOCONTROLLER -->
+            <a href="@Url.Action("Index", "Inicio")" class="flex items-center gap-2">
+                <img src="@Url.Content("~/imagine/AmayaAway logo.png")" alt="Amayaway Logo" class="h-10 object-contain" />
+            </a>
+            <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-600 items-center">
+                <!-- ENLACE A INICIO REDIRIGE CORRECTAMENTE -->
+                <a href="@Url.Action("Index", "Inicio")" class="hover:text-blue-600 transition">Inicio</a>
+                
+                <!-- MENÚ DESPLEGABLE GESTIONAR (SIN PROMOCIONES) -->
+                <div class="relative group py-2">
+                    <button class="hover:text-blue-600 font-medium flex items-center gap-1 focus:outline-none">
+                        Gestionar <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="absolute left-0 mt-1 w-48 bg-white border border-gray-100 rounded-2xl shadow-xl py-2 hidden group-hover:block z-50">
+                        <a href="@Url.Action("Index", "Paquete")" class="block px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 hover:text-blue-600">Paquetes turísticos</a>
+                        <a href="@Url.Action("Index", "Home")" class="block px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 hover:text-blue-600">Clientes</a>
+                        <a href="@Url.Action("Index", "Reportes")" class="block px-4 py-2 text-xs font-semibold text-blue-600 bg-blue-50/50 border-t border-gray-100 mt-1 pt-2">Reportes</a>
+                    </div>
+                </div>
+
+                <a href="@Url.Action("Index", "Reportes")" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-1">Reportes</a>
+                <a href="@Url.Action("Index", "Home")" class="hover:text-blue-600 transition">Clientes</a>
+                <a href="@Url.Action("Index", "Vuelo")" class="hover:text-blue-600 transition flex items-center gap-1">Vuelos <i class="fas fa-chevron-down text-xs"></i></a>
+               <a href="@Url.Action("Index", "Empleado")" class="hover:text-blue-600 transition flex items-center gap-1">Empleados <i class="fas fa-chevron-down text-xs"></i></a>
+        </div>
+        <div class="flex items-center space-x-5">
+            <button class="text-gray-500 hover:text-blue-600 relative"><i class="far fa-bell text-lg"></i></button>
+            <div class="flex items-center space-x-3 border-l pl-4 border-gray-200">
+                <div class="w-9 h-9 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm shadow">MG</div>
+                <div class="text-xs">
+                    <p class="font-bold text-gray-800">María Gómez</p>
+                    <p class="text-gray-400">Administrador</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ÁREA PRINCIPAL -->
+    <main class="flex-grow max-w-[1400px] w-full mx-auto px-6 py-6 space-y-6">
+
+        <!-- TÍTULO Y DESCRIPCIÓN -->
+        <div>
+            <h1 class="text-3xl font-extrabold text-gray-900">Reportes</h1>
+            <p class="text-xs text-gray-500 mt-1">Consulta y analiza la información de tu agencia de viajes. Selecciona el período de tiempo.</p>
+        </div>
+
+        <!-- BARRA DE FILTROS -->
+        <form method="get" asp-controller="Reportes" asp-action="Index" class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex flex-wrap gap-4 items-center justify-between">
+            <div class="flex flex-wrap gap-4 items-center flex-1">
+                <div>
+                    <label class="block text-[11px] text-gray-700 font-bold mb-1">Período</label>
+                    <select name="periodo" class="border rounded-2xl px-4 py-2 bg-gray-50/50 text-xs w-48 border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="Este mes" selected="@(Model.Periodo == "Este mes")">Este mes</option>
+                        <option value="Mes anterior" selected="@(Model.Periodo == "Mes anterior")">Mes anterior</option>
+                        <option value="Último trimestre" selected="@(Model.Periodo == "Último trimestre")">Último trimestre</option>
+                        <option value="Año actual" selected="@(Model.Periodo == "Año actual")">Año actual</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] text-gray-700 font-bold mb-1">Desde</label>
+                    <div class="relative">
+                        <input type="text" name="desde" value="@Model.FechaDesde" class="border rounded-2xl pl-4 pr-9 py-2 bg-gray-50/50 text-xs w-40 border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <i class="far fa-calendar text-gray-400 absolute right-3 top-2.5 text-xs"></i>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] text-gray-700 font-bold mb-1">Hasta</label>
+                    <div class="relative">
+                        <input type="text" name="hasta" value="@Model.FechaHasta" class="border rounded-2xl pl-4 pr-9 py-2 bg-gray-50/50 text-xs w-40 border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <i class="far fa-calendar text-gray-400 absolute right-3 top-2.5 text-xs"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-2xl text-xs font-semibold shadow-md transition flex items-center gap-2">
+                    <i class="fas fa-search"></i> Generar reporte
+                </button>
+            </div>
+        </form>
+
+        <!-- TARJETAS DE RESUMEN DINÁMICAS -->
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 space-y-4">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-blue-600 text-white rounded-2xl"><i class="fas fa-file-alt text-lg"></i></div>
+                <div>
+                    <h2 class="text-base font-bold text-gray-900">Resumen general (@Model.Periodo)</h2>
+                    <p class="text-xs text-gray-400">Información clave de tu agencia para el período seleccionado.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+                <div class="bg-gray-50/50 p-4 rounded-2xl border border-gray-100 flex items-center space-x-4">
+                    <div class="p-3.5 bg-blue-600 text-white rounded-2xl text-xl shadow-md"><i class="fas fa-dollar-sign"></i></div>
+                    <div>
+                        <p class="text-xl font-extrabold text-gray-900">$ @Model.TotalVentas.ToString("N0")</p>
+                        <p class="text-xs text-gray-500 font-medium">Total de ventas</p>
+                        <span class="inline-flex items-center gap-1 text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-md font-bold mt-1">
+                            <i class="fas fa-arrow-up text-[8px]"></i> @Model.PorcentajeVentas
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50/50 p-4 rounded-2xl border border-gray-100 flex items-center space-x-4">
+                    <div class="p-3.5 bg-blue-600 text-white rounded-2xl text-xl shadow-md"><i class="fas fa-tag"></i></div>
+                    <div>
+                        <p class="text-xl font-extrabold text-gray-900">@Model.PaquetesVendidos</p>
+                        <p class="text-xs text-gray-500 font-medium">Paquetes vendidos</p>
+                        <span class="inline-flex items-center gap-1 text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-md font-bold mt-1">
+                            <i class="fas fa-arrow-up text-[8px]"></i> @Model.PorcentajePaquetes
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50/50 p-4 rounded-2xl border border-gray-100 flex items-center space-x-4">
+                    <div class="p-3.5 bg-blue-600 text-white rounded-2xl text-xl shadow-md"><i class="fas fa-users"></i></div>
+                    <div>
+                        <p class="text-xl font-extrabold text-gray-900">@Model.ClientesAtendidos</p>
+                        <p class="text-xs text-gray-500 font-medium">Clientes atendidos</p>
+                        <span class="inline-flex items-center gap-1 text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-md font-bold mt-1">
+                            <i class="fas fa-arrow-up text-[8px]"></i> @Model.PorcentajeClientes
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50/50 p-4 rounded-2xl border border-gray-100 flex items-center space-x-4">
+                    <div class="p-3.5 bg-blue-600 text-white rounded-2xl text-xl shadow-md"><i class="fas fa-plane font-bold"></i></div>
+                    <div>
+                        <p class="text-xl font-extrabold text-gray-900">@Model.DestinosVisitados</p>
+                        <p class="text-xs text-gray-500 font-medium">Destinos visitados</p>
+                        <span class="inline-flex items-center gap-1 text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-md font-bold mt-1">
+                            <i class="fas fa-arrow-up text-[8px]"></i> @Model.PorcentajeDestinos
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: DETALLE DE VENTAS -->
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 space-y-4">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-blue-600 text-white rounded-2xl"><i class="fas fa-chart-bar text-lg"></i></div>
+                <div>
+                    <h2 class="text-base font-bold text-gray-900">Ventas</h2>
+                    <p class="text-xs text-gray-400">Resumen consolidado en el período seleccionado.</p>
+                </div>
+            </div>
+
+            <div class="overflow-hidden border border-gray-100 rounded-2xl">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-gray-50/80 border-b border-gray-100 font-bold text-gray-500 uppercase tracking-wider text-[10px]">
+                        <tr>
+                            <th class="p-3.5">Concepto</th>
+                            <th class="p-3.5 text-right">Resultado</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 text-gray-700 font-medium">
+                        @foreach (var fila in Model.DetalleReporte)
+                        {
+                            <tr class="hover:bg-gray-50/50">
+                                <td class="p-3.5 flex items-center gap-2">
+                                    <i class="fas @fila.Icono text-gray-400 w-4"></i> @fila.Concepto
+                                </td>
+                                <td class="p-3.5 text-right font-bold text-gray-900">@fila.Valor</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: HISTORIAL DE REPORTES -->
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 space-y-4">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-blue-600 text-white rounded-2xl"><i class="fas fa-file-invoice text-lg"></i></div>
+                <div>
+                    <h2 class="text-base font-bold text-gray-900">Reportes recientes</h2>
+                    <p class="text-xs text-gray-400">Consulta los últimos reportes generados en el sistema.</p>
+                </div>
+            </div>
+
+            <div class="overflow-hidden border border-gray-100 rounded-2xl">
+                <table class="w-full text-left text-xs text-gray-600">
+                    <thead class="bg-gray-50/80 border-b border-gray-100 font-bold text-gray-500 uppercase tracking-wider text-[10px]">
+                        <tr>
+                            <th class="p-3.5">Nombre del reporte</th>
+                            <th class="p-3.5">Tipo</th>
+                            <th class="p-3.5">Fecha de generación</th>
+                            <th class="p-3.5">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @foreach (var rep in Model.ReportesRecientes)
+                        {
+                            <tr class="hover:bg-gray-50/50 transition">
+                                <td class="p-3.5 font-bold text-gray-800 flex items-center gap-2">
+                                    <i class="far fa-file-alt text-gray-400"></i> @rep.Nombre
+                                </td>
+                                <td class="p-3.5 font-medium text-gray-600">@rep.Tipo</td>
+                                <td class="p-3.5 text-gray-500">@rep.FechaGeneracion</td>
+                                <td class="p-3.5">
+                                    @if (rep.Estado == "Completado")
+                                    {
+                                        <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 font-semibold text-[10px]">Completado</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-700 font-semibold text-[10px]">Pendiente</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER AZUL INSTITUCIONAL -->
+    <footer class="bg-[#0a2558] text-white pt-10 pb-6 px-8 mt-auto">
+        <div class="max-w-7xl mx-auto flex justify-between items-center text-[11px] text-gray-400">
+            <p>© 2026 <span class="text-sky-400 font-semibold">Amayaway</span>. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

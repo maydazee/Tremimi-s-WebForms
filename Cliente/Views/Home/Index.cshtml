@@ -1,0 +1,289 @@
+﻿@using Clientes.Models
+@model IEnumerable<Clientes.Models.Cliente>
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Clientes - Amayaway";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/png" href="@Url.Content("~/imagine/AmayaAway logo.png")" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body class="bg-[#f0f4f8] text-gray-800 flex flex-col min-h-screen m-0 p-0 font-sans">
+
+    <!-- HEADER / NAV SUPERIOR UNIFICADO -->
+    <header class="bg-white border-b border-gray-200 px-8 py-3 flex justify-between items-center shadow-sm sticky top-0 z-30">
+        <div class="flex items-center space-x-10">
+            <a href="@Url.Action("Index", "Inicio")" class="flex items-center gap-2">
+                <img src="@Url.Content("~/imagine/AmayaAway logo.png")" alt="Amayaway Logo" class="h-10 object-contain" />
+            </a>
+            <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-600 items-center">
+                <a href="@Url.Action("Index", "Inicio")" class="hover:text-blue-600 transition">Inicio</a>
+                
+                <!-- MENÚ DESPLEGABLE GESTIONAR (SIN PROMOCIONES) -->
+                <div class="relative group py-2">
+                    <button class="hover:text-blue-600 font-medium flex items-center gap-1 focus:outline-none">
+                        Gestionar <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="absolute left-0 mt-1 w-48 bg-white border border-gray-100 rounded-2xl shadow-xl py-2 hidden group-hover:block z-50">
+                        <a href="@Url.Action("Index", "Paquete")" class="block px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 hover:text-blue-600">Paquetes turísticos</a>
+                        <a href="@Url.Action("Index", "Home")" class="block px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 hover:text-blue-600">Clientes</a>
+                        <a href="@Url.Action("Index", "Reportes")" class="block px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 hover:text-blue-600 border-t border-gray-100 mt-1 pt-2">Reportes</a>
+                    </div>
+                </div>
+
+                <a href="@Url.Action("Index", "Reportes")" class="hover:text-blue-600 transition">Reportes</a>
+                <a href="@Url.Action("Index", "Home")" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-1">Clientes</a>
+                <a href="@Url.Action("Index", "Vuelo")" class="hover:text-blue-600 transition flex items-center gap-1">Vuelos <i class="fas fa-chevron-down text-xs"></i></a>
+               <a href="@Url.Action("Index", "Empleado")" class="hover:text-blue-600 transition flex items-center gap-1">Empleados <i class="fas fa-chevron-down text-xs"></i></a>
+        </div>
+        <div class="flex items-center space-x-5">
+            <button class="text-gray-500 hover:text-blue-600 relative"><i class="far fa-bell text-lg"></i></button>
+            <div class="flex items-center space-x-3 border-l pl-4 border-gray-200">
+                <div class="w-9 h-9 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm shadow">MG</div>
+                <div class="text-xs">
+                    <p class="font-bold text-gray-800">María Gómez</p>
+                    <p class="text-gray-400">Administrador</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ÁREA PRINCIPAL DE CLIENTES -->
+    <main class="flex-grow max-w-[1600px] w-full mx-auto px-6 py-6 space-y-6">
+
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Clientes</h1>
+                <p class="text-xs text-gray-500 mt-1">Gestiona la información de tus clientes. Puedes registrar, editar, consultar y desactivar clientes.</p>
+            </div>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-xs font-semibold shadow-md transition flex items-center gap-2">
+                <i class="fas fa-plus"></i> Nuevo cliente
+            </button>
+        </div>
+
+        <!-- TARJETAS DE MÉTRICAS CLIENTES -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                <div class="p-3.5 bg-blue-600 text-white rounded-2xl text-xl shadow-md"><i class="fas fa-users"></i></div>
+                <div>
+                    <p class="text-2xl font-extrabold text-gray-900">@ViewBag.TotalClientes</p>
+                    <p class="text-xs text-gray-500 font-medium">Total de clientes</p>
+                    <a href="javascript:void(0)" onclick="filtrarMétrica('Todos')" class="text-[11px] text-blue-600 font-bold hover:underline mt-1 inline-block">Ver detalles →</a>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                <div class="p-3.5 bg-blue-600 text-white rounded-2xl text-xl shadow-md"><i class="fas fa-user"></i></div>
+                <div>
+                    <p class="text-2xl font-extrabold text-gray-900">@ViewBag.ClientesActivos</p>
+                    <p class="text-xs text-gray-500 font-medium">Clientes activos</p>
+                    <a href="javascript:void(0)" onclick="filtrarMétrica('Activo')" class="text-[11px] text-blue-600 font-bold hover:underline mt-1 inline-block">Ver detalles →</a>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                <div class="p-3.5 bg-blue-200/80 text-blue-600 rounded-2xl text-xl shadow-sm"><i class="fas fa-chart-line"></i></div>
+                <div>
+                    <p class="text-2xl font-extrabold text-gray-900">@ViewBag.NuevosEsteMes</p>
+                    <p class="text-xs text-gray-500 font-medium">Nuevos este mes</p>
+                    <a href="javascript:void(0)" onclick="filtrarMétrica('Todos')" class="text-[11px] text-blue-600 font-bold hover:underline mt-1 inline-block">Ver detalles →</a>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                <div class="p-3.5 bg-blue-600 text-white rounded-2xl text-xl shadow-md"><i class="far fa-clock"></i></div>
+                <div>
+                    <p class="text-2xl font-extrabold text-gray-900">@ViewBag.ClientesInactivos</p>
+                    <p class="text-xs text-gray-500 font-medium">Clientes inactivos</p>
+                    <a href="javascript:void(0)" onclick="filtrarMétrica('Inactivo')" class="text-[11px] text-blue-600 font-bold hover:underline mt-1 inline-block">Ver detalles →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILTROS -->
+        <form id="formFiltros" method="get" asp-controller="Home" asp-action="Index" class="bg-white p-4 rounded-3xl shadow-sm border border-gray-100 flex flex-wrap gap-4 items-center justify-between">
+            <div class="flex-1 min-w-[240px] relative">
+                <i class="fas fa-search absolute left-3.5 top-3.5 text-gray-400 text-xs"></i>
+                <input type="text" id="inputBuscar" name="buscar" value="@ViewBag.BuscarActual" placeholder="Buscar cliente..." class="w-full pl-9 pr-4 py-2 border rounded-2xl text-xs bg-gray-50/50 focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-200" />
+            </div>
+
+            <div class="flex flex-wrap gap-3 text-xs items-end">
+                <div>
+                    <label class="block text-[10px] text-gray-500 font-bold mb-1">Estado</label>
+                    <select id="selectEstado" name="estado" class="border rounded-xl p-2 bg-gray-50 text-xs min-w-[120px] focus:outline-none border-gray-200">
+                        <option value="Todos" selected="@(ViewBag.EstadoActual == "Todos")">Todos</option>
+                        <option value="Activo" selected="@(ViewBag.EstadoActual == "Activo")">Activo</option>
+                        <option value="Inactivo" selected="@(ViewBag.EstadoActual == "Inactivo")">Inactivo</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] text-gray-500 font-bold mb-1">Tipo de cliente</label>
+                    <select name="tipo" class="border rounded-xl p-2 bg-gray-50 text-xs min-w-[120px] focus:outline-none border-gray-200">
+                        <option value="Todos" selected="@(ViewBag.TipoActual == "Todos")">Todos</option>
+                        <option value="Frecuente" selected="@(ViewBag.TipoActual == "Frecuente")">Frecuente</option>
+                        <option value="Ocasional" selected="@(ViewBag.TipoActual == "Ocasional")">Ocasional</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] text-gray-500 font-bold mb-1">Fecha de registro</label>
+                    <select name="fecha" class="border rounded-xl p-2 bg-gray-50 text-xs min-w-[120px] focus:outline-none border-gray-200">
+                        <option value="Todas" selected="@(ViewBag.FechaActual == "Todas")">Todas</option>
+                        <option value="Este mes" selected="@(ViewBag.FechaActual == "Este mes")">Este mes</option>
+                        <option value="Este año" selected="@(ViewBag.FechaActual == "Este año")">Este año</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl font-semibold shadow transition">Filtrar</button>
+                <a href="@Url.Action("Index", "Home")" class="border border-blue-200 text-blue-600 bg-blue-50/60 px-4 py-2 rounded-xl font-semibold hover:bg-blue-100 transition flex items-center gap-1.5">
+                    <i class="fas fa-undo text-[10px]"></i> Limpiar filtros
+                </a>
+            </div>
+        </form>
+
+        <!-- TABLA DE CLIENTES -->
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+            <table class="w-full text-left text-xs text-gray-600">
+                <thead class="bg-gray-50/80 border-b border-gray-100 font-bold text-gray-700 uppercase tracking-wider text-[11px]">
+                    <tr>
+                        <th class="p-4">Cliente</th>
+                        <th class="p-4">Documento</th>
+                        <th class="p-4">Correo electrónico</th>
+                        <th class="p-4">Teléfono</th>
+                        <th class="p-4">Nacionalidad</th>
+                        <th class="p-4 text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr class="hover:bg-gray-50/60 transition">
+                                <td class="p-4 font-bold text-gray-900 flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+                                        @item.Nombre.Substring(0, 1)
+                                    </div>
+                                    <span>@item.Nombre @item.Apellido</span>
+                                </td>
+                                <td class="p-4 font-medium text-gray-700">@item.DuiPasaporte</td>
+                                <td class="p-4 text-gray-600">@item.Correo</td>
+                                <td class="p-4 text-gray-600">@item.Telefono</td>
+                                <td class="p-4 text-gray-600">@item.Nacionalidad</td>
+                                <td class="p-4 text-center space-x-1">
+                                    <button onclick="verDetalleCliente('@item.Nombre @item.Apellido', '@item.DuiPasaporte', '@item.Correo', '@item.Telefono', '@item.Nacionalidad', '@item.Estado')" class="p-1.5 bg-sky-50 text-sky-600 hover:bg-sky-100 rounded-lg transition" title="Ver detalle"><i class="far fa-eye"></i></button>
+                                    <button class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg transition" title="Editar"><i class="fas fa-pen"></i></button>
+                                    <button class="p-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-lg transition" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="p-8 text-center text-gray-400 font-medium">No hay clientes registrados en el sistema.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <!-- FOOTER AZUL INSTITUCIONAL -->
+    <footer class="bg-[#0a2558] text-white pt-10 pb-6 px-8 mt-auto">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-xs">
+            <div>
+                <img src="@Url.Content("~/imagine/AmayaAway logo.png")" alt="Amayaway Logo" class="h-12 object-contain mb-3 brightness-200" />
+                <p class="text-gray-300 leading-relaxed">Agencia de viajes especializada en experiencias inolvidables alrededor del mundo.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-sm mb-3">Explora</h4>
+                <ul class="space-y-1.5 text-gray-300">
+                    <li><a href="@Url.Action("Index", "Inicio")" class="hover:underline">› Inicio</a></li>
+                    <li><a href="@Url.Action("Index", "Vuelo")" class="hover:underline">› Vuelos</a></li>
+                    <li><a href="@Url.Action("Index", "Paquete")" class="hover:underline">› Paquetes turísticos</a></li>
+                    <li><a href="@Url.Action("Index", "Home")" class="hover:underline">› Clientes</a></li>
+                    <li><a href="@Url.Action("Index", "Reportes")" class="hover:underline">› Reportes</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-sm mb-3">Información</h4>
+                <ul class="space-y-1.5 text-gray-300">
+                    <li>› Sobre nosotros</li>
+                    <li>› Términos y condiciones</li>
+                    <li>› Política de privacidad</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-sm mb-3">Contacto</h4>
+                <p class="mb-1"><i class="fas fa-phone-alt mr-1"></i> +503 2214 5678</p>
+                <p class="mb-1"><i class="fas fa-envelope mr-1"></i> info@amayaway.com</p>
+                <p class="mb-3"><i class="fas fa-map-marker-alt mr-1"></i> San Salvador, El Salvador</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto border-t border-white/10 pt-4 flex justify-between items-center text-[11px] text-gray-400">
+            <p>© 2026 <span class="text-sky-400 font-semibold">Amayaway</span>. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL VER DETALLE CLIENTE -->
+    <div id="modalDetalleCliente" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="text-lg font-bold text-gray-900">Detalle del Cliente</h3>
+                <button onclick="cerrarModalDetalle()" class="text-gray-400 hover:text-gray-600 text-base"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="space-y-3 text-xs text-gray-700">
+                <div class="flex items-center gap-3 mb-2">
+                    <div id="detInicial" class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg"></div>
+                    <div>
+                        <p id="detNombre" class="text-base font-bold text-gray-900"></p>
+                        <p id="detEstado" class="text-xs font-semibold text-emerald-600"></p>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-2xl space-y-2">
+                    <p><strong>DUI / Pasaporte:</strong> <span id="detDocumento" class="text-gray-900"></span></p>
+                    <p><strong>Correo electrónico:</strong> <span id="detCorreo" class="text-gray-900"></span></p>
+                    <p><strong>Teléfono:</strong> <span id="detTelefono" class="text-gray-900"></span></p>
+                    <p><strong>Nacionalidad:</strong> <span id="detNacionalidad" class="text-gray-900"></span></p>
+                </div>
+            </div>
+            <div class="pt-2 flex justify-end">
+                <button onclick="cerrarModalDetalle()" class="px-5 py-2 bg-blue-600 text-white font-semibold rounded-xl text-xs hover:bg-blue-700 transition">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filtrarMétrica(estado) {
+            document.getElementById('selectEstado').value = estado;
+            document.getElementById('formFiltros').submit();
+        }
+
+        function verDetalleCliente(nombre, documento, correo, telefono, nacionalidad, estado) {
+            document.getElementById('detNombre').innerText = nombre;
+            document.getElementById('detInicial').innerText = nombre.charAt(0);
+            document.getElementById('detDocumento').innerText = documento;
+            document.getElementById('detCorreo').innerText = correo;
+            document.getElementById('detTelefono').innerText = telefono;
+            document.getElementById('detNacionalidad').innerText = nacionalidad;
+            document.getElementById('detEstado').innerText = 'Estado: ' + (estado || 'Activo');
+            document.getElementById('modalDetalleCliente').classList.remove('hidden');
+        }
+
+        function cerrarModalDetalle() {
+            document.getElementById('modalDetalleCliente').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
